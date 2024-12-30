@@ -3,6 +3,7 @@ import React from 'react';
 import image from '../images/FlexCar.png';
 //components
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const HomePage: React.FC = () => {
 	return (
@@ -22,6 +23,7 @@ const HomePage: React.FC = () => {
 					<img src={image} alt='logo' />
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
