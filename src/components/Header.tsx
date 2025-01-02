@@ -58,13 +58,6 @@ const Header: React.FC = () => {
 				/>
 			</div>
 			<div className='flex flex-col sm:flex-row gap-4 items-center'>
-				{/* explore */}
-				<Link
-					to={'/'}
-					className='flex gap-2 items-center px-4 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg font-medium text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105'>
-					<FaSearch size={18} className='text-white' />
-					Explore Cars
-				</Link>
 				<div>
 					<h2>{user?.email}</h2>
 				</div>

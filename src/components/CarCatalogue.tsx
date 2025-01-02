@@ -1,17 +1,62 @@
-import { useEffect, useState } from 'react';
+//hooks
+import { useEffect, useRef, useState } from 'react';
 //icons
 import { FaSearch } from 'react-icons/fa';
-import { carTypes } from '../constants/data';
+//axios
+import axios from 'axios';
+//component
+import CarCardComponent from './CarCardComponent';
+
+interface Car {
+	city: string;
+	color: string;
+	description: string;
+	id: number;
+	image: string;
+	image_thumb: string;
+	latitude: number;
+	longitude: number;
+	make_id: string;
+	model: string;
+	postal: string | number;
+	price: number;
+	seller: string;
+	seller_name: string;
+	state: string;
+	vin: string;
+	year: number;
+}
 
 const CarCatalogue: React.FC = () => {
 	const [query, setQuery] = useState<string>('');
 	const [filter, setFilter] = useState<string[]>([]);
+	const [data, setData] = useState<Car[]>([]);
+	const [selectedCar, setSelecetedCar] = useState<Car[]>([]);
+	const inputRef = useRef<HTMLInputElement>(null);
+	const makeIds = [...new Set(data.map((car) => car.make_id))];
+	console.log(makeIds);
+
+	useEffect(() => {
+		const fetchCarsData = async () => {
+			try {
+				const response = await axios.get<Car[]>(
+					'https://example-data.draftbit.com/cars?_limit=100'
+				);
+				setData(response.data);
+				console.log(response.data);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		inputRef.current?.scrollIntoView({ behavior: 'smooth' });
+		fetchCarsData();
+	}, []);
 
 	useEffect(() => {
 		const filteredCars =
 			query === ''
-				? carTypes
-				: carTypes.filter((car) =>
+				? makeIds
+				: makeIds.filter((car) =>
 						car
 							.toLowerCase()
 							.replace(/\s+/g, '')
@@ -20,17 +65,28 @@ const CarCatalogue: React.FC = () => {
 		setFilter(filteredCars);
 	}, [query]);
 
+	useEffect(() => {
+		const viewSelectedCars =
+			query.trim() === ''
+				? []
+				: data.filter((car) =>
+						car.make_id
+							.toLowerCase()
+							.includes(query.trim().toLowerCase())
+				  );
+
+		setSelecetedCar(viewSelectedCars);
+	}, [query]);
+
 	const handleSearch = (e: React.FormEvent) => {
 		e.preventDefault();
 	};
 	return (
 		<div className='mt-12'>
 			<div className='text-center mb-8'>
-				<h1 className='text-4xl font-bold text-red-600'>
-					Car Catalogue
-				</h1>
+				<h1 className='text-4xl font-bold text-red-600'>Catalogue</h1>
 				<p className='text-gray-500 font-semibold'>
-					Discover the car that suits your style
+					Discover the vehicle that suits your style
 				</p>
 			</div>
 
@@ -40,6 +96,7 @@ const CarCatalogue: React.FC = () => {
 					className='flex flex-col items-center bg-white p-6 rounded-lg shadow-lg w-full max-w-md'>
 					<div className='flex items-center w-full'>
 						<input
+							ref={inputRef}
 							type='text'
 							placeholder='Search cars...'
 							value={query}
@@ -76,7 +133,16 @@ const CarCatalogue: React.FC = () => {
 			</div>
 
 			<div className='mt-8 text-center'>
-				<p className='text-gray-500'>Custom filter</p>
+				<p className='text-gray-500'>
+					{query &&
+						selectedCar.map((car, index) => {
+							return (
+								<div key={index}>
+									<CarCardComponent car={car} />
+								</div>
+							);
+						})}
+				</p>
 			</div>
 		</div>
 	);
