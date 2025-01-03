@@ -1,13 +1,7 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
-		"module": "esnext",
-		"moduleResolution": "node",
-		"strict": true,
-		"skipLibCheck": true,
 		"noEmitOnError": false,
-		"esModuleInterop": true,
-		"jsx": "react-ts"
+		"skipLibCheck": true
 	},
 	"files": [],
 	"references": [
