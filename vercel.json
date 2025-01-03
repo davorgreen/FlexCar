@@ -1,14 +1,19 @@
 {
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/static-build"
-      }
-    ],
-    "build": {
-      "env": {
-        "SKIP_TYPE_CHECK": "true"
-      }
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
-  }
-  
+  ],
+  "build": {
+    "env": {
+      "SKIP_TYPE_CHECK": "true"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
