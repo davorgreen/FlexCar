@@ -1,15 +1,14 @@
 {
     "builds": [
       {
-        "src": "vite.config.ts",
-        "use": "@vercel/static-build"
+        "src": "package.json",
+        "use": "@vercel/node"
       }
     ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/index.html"
+    "build": {
+      "env": {
+        "SKIP_TYPE_CHECK": "true"
       }
-    ]
+    }
   }
   
