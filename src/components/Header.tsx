@@ -1,7 +1,7 @@
 //images
 import image1 from '../images/FlexCar.png';
 //icons
-import { FaRegUser, FaSearch, FaRegHeart } from 'react-icons/fa';
+import { FaRegUser, FaRegHeart } from 'react-icons/fa';
 //router
 import { Link, useNavigate } from 'react-router-dom';
 //toastify
@@ -13,7 +13,7 @@ import supabase from '../auth_supabase/supabase';
 
 interface SupabaseUser {
 	id: string;
-	email: string;
+	email: string | undefined;
 }
 
 const Header: React.FC = () => {
@@ -40,7 +40,11 @@ const Header: React.FC = () => {
 			if (error) {
 				navigate('/login');
 			} else {
-				setUser(data.user);
+				const mappedUser: SupabaseUser = {
+					id: data.user.id,
+					email: data.user.email,
+				};
+				setUser(mappedUser);
 			}
 		};
 

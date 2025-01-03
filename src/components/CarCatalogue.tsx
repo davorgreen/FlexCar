@@ -11,11 +11,11 @@ interface Car {
 	city: string;
 	color: string;
 	description: string;
-	id: number;
+	//id: number;
 	image: string;
-	image_thumb: string;
-	latitude: number;
-	longitude: number;
+	//image_thumb: string;
+	//latitude: number;
+	//longitude: number;
 	make_id: string;
 	model: string;
 	postal: string | number;
