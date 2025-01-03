@@ -40,7 +40,7 @@ const CarCatalogue: React.FC = () => {
 		const fetchCarsData = async () => {
 			try {
 				const response = await axios.get<Car[]>(
-					'https://example-data.draftbit.com/cars?_limit=100'
+					'https://example-data.draftbit.com/cars?_limit=240'
 				);
 				setData(response.data);
 				console.log(response.data);
@@ -98,7 +98,7 @@ const CarCatalogue: React.FC = () => {
 						<input
 							ref={inputRef}
 							type='text'
-							placeholder='Search cars...'
+							placeholder='Search by car make...'
 							value={query}
 							onChange={(e) => setQuery(e.target.value)}
 							className='border border-gray-300 rounded-l-lg p-3 w-full focus:outline-none focus:ring focus:ring-red-300 text-gray-700'
@@ -133,16 +133,13 @@ const CarCatalogue: React.FC = () => {
 			</div>
 
 			<div className='mt-8 text-center'>
-				<p className='text-gray-500'>
-					{query &&
-						selectedCar.map((car, index) => {
-							return (
-								<div key={index}>
-									<CarCardComponent car={car} />
-								</div>
-							);
+				{query && (
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+						{selectedCar.map((car, index) => {
+							return <CarCardComponent key={index} car={car} />;
 						})}
-				</p>
+					</div>
+				)}
 			</div>
 		</div>
 	);

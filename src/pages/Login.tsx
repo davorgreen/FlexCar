@@ -26,7 +26,6 @@ const Login: React.FC = () => {
 			email,
 			password,
 		});
-
 		if (error) {
 			setError(error.message);
 			toast.error('Invalid email or password. Please try again!');

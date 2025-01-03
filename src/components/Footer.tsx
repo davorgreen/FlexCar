@@ -7,11 +7,13 @@ const Footer: React.FC = () => {
 		<div className='bg-sky-100 shadow-md rounded-lg w-screen mt-5'>
 			<div className='flex flex-col sm:flex-row justify-between mr-10 items-start sm:items-center gap-6 p-6 border-t border-gray-300'>
 				<div className='flex flex-col items-start gap-4'>
-					<img
-						src={image}
-						alt='logo'
-						className='w-32 h-16 md:w-40 md:h-20 object-contain'
-					/>
+					<Link to={'/'}>
+						<img
+							src={image}
+							alt='logo'
+							className='w-32 h-16 md:w-40 md:h-20 object-contain'
+						/>
+					</Link>
 					<p className='text-sm text-gray-700'>
 						FlexCar 2025 <br />
 						All Rights Reserved &copy;

@@ -49,47 +49,57 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	return (
-		<div className='w-full max-w-lg mx-auto bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg mt-6'>
-			<div className='flex flex-col gap-6'>
+		<div className='w-80 h-96 mx-auto bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg mt-6'>
+			<div className='flex flex-col h-full'>
+				{/* img */}
 				<img
 					src={image}
 					alt={`${make_id} ${model}`}
-					className='w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:h-auto'
+					className='w-full h-48 object-cover rounded-t-lg'
 				/>
-				<div className='p-4 flex flex-col justify-between'>
-					<div>
-						<h3 className='text-lg font-bold text-gray-800'>
+				{/* content */}
+				<div className='p-4 flex flex-col flex-grow'>
+					<div className='flex-grow'>
+						<h3 className='text-lg font-bold text-gray-800 truncate'>
 							{make_id} {model} ({year})
 						</h3>
 						<p className='font-semibold text-gray-700'>
 							${price.toLocaleString()}
 						</p>
 					</div>
-
-					<div className='mt-6'>
+					{/* buttons */}
+					<div className='mt-4 flex flex-col gap-2'>
 						<button
 							className='w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition'
 							onClick={() => setOpenModal(true)}>
 							View Details
 						</button>
+						<button
+							className='w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition'
+							onClick={() => setOpenModal(true)}>
+							Add To Favorites
+						</button>
 					</div>
 				</div>
 			</div>
+
+			{/* modal */}
 			{openModal && (
 				<div className='fixed top-0 right-0 bottom-0 left-0 bg-white'>
 					<div className='flex flex-col'>
-						{/* close*/}
+						{/* close button */}
 						<button
 							onClick={() => setOpenModal(false)}
 							className=' text-gray-400 hover:text-red-700 transition'>
 							<IoIosClose size={40} />
 						</button>
+
 						{/* title */}
-						<h2 className='text-3xl font-extrabold text-red-600 text-center mb-4'>
+						<h2 className='text-3xl font-extrabold text-red-600 text-center'>
 							Car Details
 						</h2>
 						{/* content */}
-						<div className='flex flex-col justify-start gap-2 '>
+						<div className='flex flex-col justify-start'>
 							<p className='text-gray-600'>
 								<span className='font-semibold'>
 									Location: {city}, {state}
@@ -103,10 +113,9 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 									Seller: {seller}
 								</span>
 							</p>
-
-							<p className='text-black mb-2 mt-2'>
+							<p className='text-black'>
 								<span className='font-semibold text-sm text-wrap'>
-									Description: {description}
+									Description: {description.slice(0, 100)}
 								</span>
 							</p>
 							<p className='text-black'>
@@ -118,12 +127,12 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 							<p className='text-black'>
 								<span className='font-bold'>Model: {model}</span>
 							</p>
-							<p className='text-green-800 mt-2'>
+							<p className='text-green-800'>
 								<span className='font-bold'>
 									Price: ${price.toLocaleString()}
 								</span>
 							</p>
-							<p className='text-gray-800 mt-4'>
+							<p className='text-gray-800'>
 								<span className='font-semibold'>VIN:</span> {vin}
 							</p>
 						</div>

@@ -1,7 +1,7 @@
 //images
 import image1 from '../images/FlexCar.png';
 //icons
-import { FaRegUser, FaSearch } from 'react-icons/fa';
+import { FaRegUser, FaSearch, FaRegHeart } from 'react-icons/fa';
 //router
 import { Link, useNavigate } from 'react-router-dom';
 //toastify
@@ -26,7 +26,7 @@ const Header: React.FC = () => {
 			if (error) {
 				toast.error('Error signing out: ' + error.message);
 			} else {
-				toast.success('Logged in Successfully.');
+				toast.success('Logout Successfully.');
 				navigate('/login');
 			}
 		} catch (error) {
@@ -50,14 +50,23 @@ const Header: React.FC = () => {
 	console.log(user);
 	return (
 		<div className='flex flex-wrap gap-4 justify-between items-center p-4 bg-sky-100 shadow-md rounded-lg w-screen'>
-			<div className='flex  items-center gap-10'>
-				<img
-					src={image1}
-					alt='logo'
-					className='w-32 h-16 md:w-40 md:h-20'
-				/>
-			</div>
+			<Link to={'/'}>
+				<div className='flex  items-center gap-10'>
+					<img
+						src={image1}
+						alt='logo'
+						className='w-32 h-16 md:w-40 md:h-20'
+					/>
+				</div>
+			</Link>
 			<div className='flex flex-col sm:flex-row gap-4 items-center'>
+				{/* favorites */}
+				<Link to={'/favorites'}>
+					<button className='flex gap-2 items-center px-4 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg font-medium text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 mr-4'>
+						<FaRegHeart size={18} className='text-white' />
+						Favorites <span>0</span>
+					</button>
+				</Link>
 				<div>
 					<h2>{user?.email}</h2>
 				</div>

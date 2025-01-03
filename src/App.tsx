@@ -9,6 +9,7 @@ import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { ToastContainer } from 'react-toastify';
+import FavoritesPage from './pages/FavoritesPage';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
+					<Route path='favorites' element={<FavoritesPage />} />
 				</Routes>
 				<ToastContainer />
 			</Router>
