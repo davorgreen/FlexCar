@@ -5,17 +5,17 @@ interface Car {
 	city: string;
 	color: string;
 	description: string;
-	id: number;
+	//id: number;
 	image: string;
-	image_thumb: string;
-	latitude: number;
-	longitude: number;
+	//image_thumb: string;
+	//latitude: number;
+	//longitude: number;
 	make_id: string;
 	model: string;
 	postal: string | number;
 	price: number;
 	seller: string;
-	seller_name: string;
+	//seller_name: string;
 	state: string;
 	vin: string;
 	year: number;
@@ -32,11 +32,11 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 		city,
 		color,
 		description,
-		id,
+		//id,
 		image,
-		image_thumb,
-		latitude,
-		longitude,
+		//image_thumb,
+		//latitude,
+		//longitude,
 		make_id,
 		model,
 		price,
