@@ -8,6 +8,13 @@ import image1 from '/src/images/FlexCar.png';
 //supabase
 import supabase from '../auth_supabase/supabase';
 
+type Login = {
+	data: {
+		user: User | null;
+	};
+	error: Error | null;
+};
+
 const Login: React.FC = () => {
 	const [email, setEmail] = useState<string>('');
 	const [password, setPassword] = useState<string>('');
@@ -21,20 +28,31 @@ const Login: React.FC = () => {
 	): Promise<void> => {
 		e.preventDefault();
 		setError('');
-		//setLoading(true);
-		const { data, error } = await supabase.auth.signInWithPassword({
-			email,
-			password,
-		});
-		if (error) {
-			setError(error.message);
-			toast.error('Invalid email or password. Please try again!');
-		} else {
-			//setLoading(false);
+
+		try {
+			//setLoading(true);
+			const { data, error }: Login =
+				await supabase.auth.signInWithPassword({
+					email,
+					password,
+				});
+
+			if (error) {
+				setError(error.message);
+				toast.error('Invalid email or password. Please try again!');
+				return;
+			}
+			//success
 			toast.success('Logged in successfully.');
 			navigate('/');
+		} catch (err) {
+			setError('An unexpected error occurred. Please try again.');
+			console.error(err);
+		} finally {
+			//setLoading(false);
 		}
 	};
+
 	return (
 		<div className='flex justify-center items-center h-screen bg-gray-100'>
 			<div className='max-w-sm w-full  bg-white  p-8 rounded-lg shadow-lg'>

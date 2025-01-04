@@ -7,9 +7,11 @@ import { Link, useNavigate } from 'react-router-dom';
 //toastify
 import { toast } from 'react-toastify';
 //hooks
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 //supabase
 import supabase from '../auth_supabase/supabase';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, logout } from '../redux/slices/UserSlice';
 
 interface SupabaseUser {
 	id: string;
@@ -17,8 +19,10 @@ interface SupabaseUser {
 }
 
 const Header: React.FC = () => {
-	const [user, setUser] = useState<SupabaseUser | null>(null);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const { user } = useSelector((state) => state.userStore);
+	console.log(user);
 
 	const handleSignOutUser = async (): Promise<void> => {
 		try {
@@ -26,6 +30,7 @@ const Header: React.FC = () => {
 			if (error) {
 				toast.error('Error signing out: ' + error.message);
 			} else {
+				dispatch(logout());
 				toast.success('Logout Successfully.');
 				navigate('/login');
 			}
@@ -37,21 +42,20 @@ const Header: React.FC = () => {
 	useEffect(() => {
 		const fetchUser = async (): Promise<void> => {
 			const { data, error } = await supabase.auth.getUser();
-			if (error) {
+			if (error || !data.user) {
 				navigate('/login');
 			} else {
 				const mappedUser: SupabaseUser = {
 					id: data.user.id,
 					email: data.user.email,
 				};
-				setUser(mappedUser);
+				dispatch(login(data.user));
 			}
 		};
 
 		fetchUser();
-	}, [navigate]);
+	}, [navigate, dispatch]);
 
-	console.log(user);
 	return (
 		<div className='flex flex-wrap gap-4 justify-between items-center p-4 bg-sky-100 shadow-md rounded-lg w-screen'>
 			<Link to={'/'}>
@@ -72,7 +76,11 @@ const Header: React.FC = () => {
 					</button>
 				</Link>
 				<div>
-					<h2>{user?.email}</h2>
+					{user?.email ? (
+						<h2>{user.email}</h2>
+					) : (
+						<h2>Checking for user...</h2>
+					)}
 				</div>
 				{/* logout */}
 				<button
