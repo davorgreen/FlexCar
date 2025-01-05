@@ -19,7 +19,7 @@ function App() {
 					<Route path='/' element={<HomePage />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
-					<Route path='favorites' element={<FavoritesPage />} />
+					<Route path='/favorites' element={<FavoritesPage />} />
 				</Routes>
 				<ToastContainer />
 			</Router>

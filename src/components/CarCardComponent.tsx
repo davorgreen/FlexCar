@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { IoIosClose } from 'react-icons/io';
+import { useDispatch } from 'react-redux';
+import { addToFavorites } from '../redux/slices/FavoritesSlice';
+import { useNavigate } from 'react-router';
 
 interface Car {
 	city: string;
 	color: string;
 	description: string;
-	//id: number;
+	id: number;
 	image: string;
 	//image_thumb: string;
 	//latitude: number;
@@ -32,7 +35,7 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 		city,
 		color,
 		description,
-		//id,
+		id,
 		image,
 		//image_thumb,
 		//latitude,
@@ -47,7 +50,12 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 	} = car;
 
 	const [openModal, setOpenModal] = useState<boolean>(false);
-
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const handleAddToFavorites = (id) => {
+		dispatch(addToFavorites(id));
+		navigate('favorites');
+	};
 	return (
 		<div className='w-80 h-96 mx-auto bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg mt-6'>
 			<div className='flex flex-col h-full'>
@@ -76,7 +84,7 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 						</button>
 						<button
 							className='w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition'
-							onClick={() => setOpenModal(true)}>
+							onClick={() => handleAddToFavorites(id)}>
 							Add To Favorites
 						</button>
 					</div>

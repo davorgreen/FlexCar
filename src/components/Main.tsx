@@ -5,9 +5,9 @@ const Main: React.FC = () => {
 	return (
 		<div className='flex flex-col items-center justify-center p-6 space-y-4 bg-[url("https://t3.ftcdn.net/jpg/02/92/57/14/360_F_292571491_R01YTzyvuceDL3UujKe7z38awUeUwtnD.jpg")] bg-cover bg-center bg-no-repeat h-screen'>
 			<h3 className='text-xl md:text-2xl font-bold text-gray-800 text-center'>
-				Looking for a vehicle?{' '}
+				Looking for a vehicle?
 				<span className='text-red-500'>
-					You’re at the right place.
+					{''} You’re at the right place.
 				</span>
 			</h3>
 			<p className='text-sm md:text-base font-semibold text-gray-700 text-center'>

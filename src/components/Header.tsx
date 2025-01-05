@@ -22,7 +22,6 @@ const Header: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.userStore);
-	console.log(user);
 
 	const handleSignOutUser = async (): Promise<void> => {
 		try {

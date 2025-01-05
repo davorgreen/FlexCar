@@ -6,12 +6,14 @@ import { FaSearch } from 'react-icons/fa';
 import axios from 'axios';
 //component
 import CarCardComponent from './CarCardComponent';
+import { useDispatch, useSelector } from 'react-redux';
+import { setData } from '../redux/slices/UserSlice';
 
 interface Car {
 	city: string;
 	color: string;
 	description: string;
-	//id: number;
+	id: string;
 	image: string;
 	//image_thumb: string;
 	//latitude: number;
@@ -30,11 +32,11 @@ interface Car {
 const CarCatalogue: React.FC = () => {
 	const [query, setQuery] = useState<string>('');
 	const [filter, setFilter] = useState<string[]>([]);
-	const [data, setData] = useState<Car[]>([]);
 	const [selectedCar, setSelecetedCar] = useState<Car[]>([]);
+	const dispatch = useDispatch();
+	const { data } = useSelector((state) => state.userStore);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const makeIds = [...new Set(data.map((car) => car.make_id))];
-	console.log(makeIds);
 
 	useEffect(() => {
 		const fetchCarsData = async () => {
@@ -42,15 +44,14 @@ const CarCatalogue: React.FC = () => {
 				const response = await axios.get<Car[]>(
 					'https://example-data.draftbit.com/cars?_limit=240'
 				);
-				setData(response.data);
-				console.log(response.data);
+				dispatch(setData(response.data));
 			} catch (error) {
 				console.log(error);
 			}
 		};
 		inputRef.current?.scrollIntoView({ behavior: 'smooth' });
 		fetchCarsData();
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		const filteredCars =
