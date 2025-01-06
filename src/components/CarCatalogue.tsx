@@ -13,17 +13,17 @@ interface Car {
 	city: string;
 	color: string;
 	description: string;
-	id: string;
+	id: number;
 	image: string;
-	//image_thumb: string;
-	//latitude: number;
-	//longitude: number;
+	image_thumb?: string;
+	latitude?: number;
+	longitude?: number;
 	make_id: string;
 	model: string;
 	postal: string | number;
 	price: number;
 	seller: string;
-	seller_name: string;
+	seller_name?: string;
 	state: string;
 	vin: string;
 	year: number;
@@ -136,8 +136,8 @@ const CarCatalogue: React.FC = () => {
 			<div className='mt-8 text-center'>
 				{query && (
 					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-						{selectedCar.map((car, index) => {
-							return <CarCardComponent key={index} car={car} />;
+						{selectedCar.map((car) => {
+							return <CarCardComponent key={car.id} car={car} />;
 						})}
 					</div>
 				)}

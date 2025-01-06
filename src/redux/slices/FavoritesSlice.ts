@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface FavoritesState {
-    favoritesProduct: number[];
+    favoritesProduct: string[];
 }
 
 const initialState: FavoritesState = {
     favoritesProduct: localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')!) : []
 }
-
-
 
 const FavoriteSlice = createSlice({
     name: 'favorites',
@@ -18,7 +16,7 @@ const FavoriteSlice = createSlice({
             if (!state.favoritesProduct.includes(action.payload)) {
                 state.favoritesProduct.push(action.payload);
             }
-            localStorage.setItem('favorites', JSON.stringify(action.payload))
+            localStorage.setItem('favorites', JSON.stringify(state.favoritesProduct))
         },
         removeFromFavorites: (state, action) => {
             state.favoritesProduct = state.favoritesProduct.filter((id) => id !== action.payload);

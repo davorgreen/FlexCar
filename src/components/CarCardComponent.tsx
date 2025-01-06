@@ -10,15 +10,15 @@ interface Car {
 	description: string;
 	id: number;
 	image: string;
-	//image_thumb: string;
-	//latitude: number;
-	//longitude: number;
+	image_thumb?: string;
+	latitude?: number;
+	longitude?: number;
 	make_id: string;
 	model: string;
-	postal: string | number;
+	postal?: string | number;
 	price: number;
 	seller: string;
-	//seller_name: string;
+	seller_name?: string;
 	state: string;
 	vin: string;
 	year: number;
@@ -37,9 +37,9 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 		description,
 		id,
 		image,
-		//image_thumb,
-		//latitude,
-		//longitude,
+		image_thumb,
+		latitude,
+		longitude,
 		make_id,
 		model,
 		price,
@@ -52,9 +52,11 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 	const [openModal, setOpenModal] = useState<boolean>(false);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const handleAddToFavorites = (id) => {
+
+	//add to favorites
+	const handleAddToFavorites = (id: number): void => {
 		dispatch(addToFavorites(id));
-		navigate('favorites');
+		navigate('/favorites');
 	};
 	return (
 		<div className='w-80 h-96 mx-auto bg-white rounded-lg shadow-md overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg mt-6'>
@@ -123,7 +125,9 @@ const CarCardComponent: React.FC<CarCardComponentProps> = ({
 							</p>
 							<p className='text-black'>
 								<span className='font-semibold text-sm text-wrap'>
-									Description: {description.slice(0, 100)}
+									Description:{' '}
+									{description.slice(0, 100) ||
+										'No description available'}
 								</span>
 							</p>
 							<p className='text-black'>

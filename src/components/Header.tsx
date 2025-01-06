@@ -17,11 +17,22 @@ interface SupabaseUser {
 	id: string;
 	email: string | undefined;
 }
+interface RootState {
+	userStore: {
+		user: SupabaseUser | null;
+	};
+	favoritesStore: {
+		favoritesProduct: string[] | null;
+	};
+}
 
 const Header: React.FC = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { user } = useSelector((state) => state.userStore);
+	const { user } = useSelector((state: RootState) => state.userStore);
+	const { favoritesProduct } = useSelector(
+		(state: RootState) => state.favoritesStore
+	);
 
 	const handleSignOutUser = async (): Promise<void> => {
 		try {
@@ -71,7 +82,10 @@ const Header: React.FC = () => {
 				<Link to={'/favorites'}>
 					<button className='flex gap-2 items-center px-4 py-2 bg-gradient-to-r from-green-400 to-green-600 text-white rounded-lg font-medium text-base shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 mr-4'>
 						<FaRegHeart size={18} className='text-white' />
-						Favorites <span>0</span>
+						Favorites{' '}
+						<span>
+							{favoritesProduct ? favoritesProduct.length : 0}
+						</span>
 					</button>
 				</Link>
 				<div>

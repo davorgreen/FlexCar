@@ -8,12 +8,15 @@ import { setData } from '../redux/slices/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 //axios
 import axios from 'axios';
+//icons
+import { FaRegTrashCan } from 'react-icons/fa6';
+import { removeFromFavorites } from '../redux/slices/FavoritesSlice';
 
 interface Car {
 	city: string;
 	color: string;
 	description: string;
-	id: string;
+	id: number;
 	image: string;
 	//image_thumb: string;
 	//latitude: number;
@@ -29,16 +32,26 @@ interface Car {
 	year: number;
 }
 
+interface RootState {
+	userStore: {
+		data: Car[];
+	};
+	favoritesStore: {
+		favoritesProduct: string[];
+	};
+}
+
 const FavoritesPage: React.FC = () => {
 	const dispatch = useDispatch();
 	const { favoritesProduct } = useSelector(
-		(state) => state.favoritesStore
+		(state: RootState) => state.favoritesStore
 	);
-	const { data } = useSelector((state) => state.userStore);
-	const favorites = data.filter((item) =>
+	const { data } = useSelector((state: RootState) => state.userStore);
+	const favorites: Car[] = data.filter((item) =>
 		favoritesProduct.some((fav) => fav === item.id)
 	);
 
+	//get data
 	useEffect(() => {
 		const fetchCarsData = async () => {
 			try {
@@ -53,6 +66,11 @@ const FavoritesPage: React.FC = () => {
 
 		fetchCarsData();
 	}, [dispatch]);
+
+	//remove from favorites
+	const removeFavorites = (id: string): void => {
+		dispatch(removeFromFavorites(id));
+	};
 
 	return (
 		<div>
@@ -74,24 +92,27 @@ const FavoritesPage: React.FC = () => {
 								/>
 								<div className='p-4 flex-col'>
 									<h2 className='text-xl text-center font-semibold mb-2'>
+										{car.make_id}
+									</h2>
+									<h2 className='text-xl text-center font-semibold mb-2'>
 										{car.model}
 									</h2>
-									<p className='text-gray-700 mb-2'>
-										{car.description}
-									</p>
 									<div className='flex justify-between items-center'>
-										<span className='text-lg font-semibold text-green-500'>
+										<span className='text-xl font-semibold text-green-500'>
 											${car.price}
 										</span>
-										<span className='text-sm text-gray-500'>
+										<span className='text-base text-gray-600'>
 											{car.year}
 										</span>
 									</div>
-									<div className='flex flex-col justify-between items-center mt-4'>
-										<span className='text-sm text-gray-500'>
+									<div className='flex flex-col  items-center mt-4'>
+										<span className='text-md text-gray-500'>
 											{car.city}, {car.state}
 										</span>
-										<button className='text-blue-600 '>
+										<button
+											onClick={() => removeFavorites(car.id)}
+											className='text-gay-600 text-lg px-2 py-1 mt-2 rounded-md bg-gray-300 hover:bg-gray-400 font-semibold flex items-center gap-2 '>
+											<FaRegTrashCan size={20} />
 											Remove From Favorites
 										</button>
 									</div>
