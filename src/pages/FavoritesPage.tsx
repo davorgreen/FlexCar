@@ -44,7 +44,6 @@ interface RootState {
 
 const FavoritesPage: React.FC = () => {
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 	const { favoritesProduct } = useSelector(
 		(state: RootState) => state.favoritesStore
 	);
@@ -72,7 +71,6 @@ const FavoritesPage: React.FC = () => {
 	//remove from favorites
 	const removeFavorites = (id: string): void => {
 		dispatch(removeFromFavorites(id));
-		navigate('/');
 	};
 
 	return (
