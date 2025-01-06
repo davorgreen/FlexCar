@@ -11,6 +11,7 @@ import axios from 'axios';
 //icons
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { removeFromFavorites } from '../redux/slices/FavoritesSlice';
+import { useNavigate } from 'react-router';
 
 interface Car {
 	city: string;
@@ -43,6 +44,7 @@ interface RootState {
 
 const FavoritesPage: React.FC = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const { favoritesProduct } = useSelector(
 		(state: RootState) => state.favoritesStore
 	);
@@ -70,6 +72,7 @@ const FavoritesPage: React.FC = () => {
 	//remove from favorites
 	const removeFavorites = (id: string): void => {
 		dispatch(removeFromFavorites(id));
+		navigate('/');
 	};
 
 	return (
